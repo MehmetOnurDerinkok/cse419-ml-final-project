@@ -1,0 +1,10 @@
+to be scaled columns: new_status, new_credit_history, new_purpose, new_savings,
+new_employment_duration, new_other_debtors, new_present_residence, new_property, new_housing,
+new_job
+
+to be deleted columns: status, duration, credit_history, purpose, amount, savings,
+employment_duration, personal_status_sex, other_debtors, present_residence, property,
+age, housing, job, telephone
+
+to be used as is columns: installment_rate, other_installment_plans, number_credits,
+people_liable, foreign_worker

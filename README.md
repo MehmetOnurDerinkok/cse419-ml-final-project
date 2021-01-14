@@ -10,4 +10,4 @@ CSE419 Artificial Intelligence and Machine Learning Final Project
 - Clone the project
 - Create a virtualenv and activate it
 - Install requirements: `pip install -r requirements.txt`
-- `export RAW_FILE_PATH=data/SouthGermanCredit.asc` or other file can be used
+- `export RAW_FILE_PATH=data/south_german_credit.asc` or other file can be used
