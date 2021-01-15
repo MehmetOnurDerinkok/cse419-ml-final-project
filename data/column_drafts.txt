@@ -7,4 +7,4 @@ employment_duration, personal_status_sex, other_debtors, present_residence, prop
 age, housing, job, telephone
 
 to be used as is columns: installment_rate, other_installment_plans, number_credits,
-people_liable, foreign_worker
+people_liable, foreign_worker, credit_risk
