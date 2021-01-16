@@ -1,20 +1,23 @@
 # cse419-ml-final-project
 CSE419 Artificial Intelligence and Machine Learning Final Project
 
-## Explanation 
-
-- TODO In this line i will explain further information about my final project.
+1. This project can be used to predict credit_risk based on some certain inputs.
+2. Please check ./data directory to see more details
+    1. code_table.txt: contains english counterpart of german columns, meaning of raw values, also
+                        new (scaled/extended) columns based on original ones to reduce complexity.
+    2. column_drafts: contains draft workshop regarding which column should be used in what sense.
+    3. query_input: contains 50 sample rows in order to check trained model.
+    4. south_german_credit.asc: contains raw data and this file is being used for traning model.
 
 
 ## Installation
 
-- Clone the project
-- Create a virtualenv and activate it
+- Clone the project: `git clone https://github.com/MehmetOnurDerinkok/cse419-ml-final-project.git`
+- Go to directory: `cd cse419-ml-final-project`
+- Create a virtualenv and activate it: `virtualenv .venv` && `source .venv/bin/activate`
+        > Python 3.7+ should be used.
 - Install requirements: `pip install -r requirements.txt`
-- `export RAW_FILE_PATH=data/south_german_credit.asc` or other file can be used
 
-## Check NORMALIZATION_MAPPING syntax is correct
+# How to run?
 
-- `cd /home/onur/development/cse419-ml-final-project`
-- `deactivate && source .venv/bin/activate`
-- python check_config.py
+- run `python main.py`

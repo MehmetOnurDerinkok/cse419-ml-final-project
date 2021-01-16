@@ -1,5 +1,18 @@
 """
-hints:
+Project related configuration
+"""
+
+ENGLISH_COLUMN_NAMES = ['status', 'duration', 'credit_history', 'purpose', 'amount',
+                        'savings', 'employment_duration', 'installment_rate',
+                        'personal_status_sex', 'other_debtors',
+                        'present_residence', 'property',
+                        'age', 'other_installment_plans',
+                        'housing', 'number_credits',
+                        'job', 'people_liable', 'telephone', 'foreign_worker',
+                        'credit_risk']
+
+"""
+hints for NORMALIZATION_MAPPING:
 
 delete: True/False
 replace_with: string/None
@@ -58,11 +71,11 @@ NORMALIZATION_MAPPING = {
             7: 3,
             8: 4,
             9: 3,
-            10:5,
+            10: 5,
         },
     },
 
-  'amount': {
+    'amount': {
         'delete': True,
         'replace_with': None,
         'use_as_is': False,
@@ -70,12 +83,12 @@ NORMALIZATION_MAPPING = {
 
         },
     },
-'savings': {
+
+    'savings': {
         'delete': True,
         'replace_with': 'new_savings',
         'use_as_is': False,
         'value_mapping': {
-
             1: 1,
             2: 2,
             3: 3,
@@ -84,12 +97,11 @@ NORMALIZATION_MAPPING = {
         },
     },
 
-'employment_duration': {
+    'employment_duration': {
         'delete': True,
         'replace_with': 'new_employment_duration',
         'use_as_is': False,
         'value_mapping': {
-
             1: 1,
             2: 2,
             3: 3,
@@ -97,178 +109,154 @@ NORMALIZATION_MAPPING = {
             5: 3,
         },
     },
-'installment_rate': {
+
+    'installment_rate': {
         'delete': False,
         'replace_with': None,
         'use_as_is': True,
         'value_mapping': {
-           1: 1,
-           2: 2,
-           3: 3,
-           4: 4,
-        },
-    },
-'personel_status_sex': {
-        'delete': True,
-        'replace_with': None,
-        'use_as_is': False,
-        'value_mapping': {
-
-        },
-    },
-'other_debtors': {
-        'delete': True,
-        'replace_with': 'new_othe_debtors',
-        'use_as_is': False,
-        'value_mapping': {
-
-            1: 1,
-            2: 2,
-            3: 2,
-        },
-    },
-'present_residence': {
-        'delete': True,
-        'replace_with': 'new_present_residence',
-        'use_as_is': False,
-        'value_mapping': {
-
-            1: 1,
-            2: 2,
-            3: 2,
-            4: 2,
-        },
-    },
-'property': {
-        'delete': True,
-        'replace_with': 'new_property',
-        'use_as_is': False,
-        'value_mapping': {
-
-            1: 1,
-            2: 2,
-            3: 2,
-            4: 2,
-        },
-    },
-'age': {
-        'delete': True,
-        'replace_with': None,
-        'use_as_is': False,
-        'value_mapping': {
-
-        },
-    },
-'other_installment_plans': {
-        'delete': False,
-        'replace_with': None,
-        'use_as_is': True,
-        'value_mapping': {
-
-            1: 1,
-            2: 2,
-            3: 3,
-
-
-        },
-    },
-'housing': {
-        'delete': True,
-        'replace_with': 'new_housing',
-        'use_as_is': False,
-        'value_mapping': {
-
-            1: 1,
-            2: 2,
-            3: 1,
-
-        },
-    },
-'number_credit': {
-        'delete': False,
-        'replace_with': None,
-        'use_as_is': True,
-        'value_mapping': {
-
             1: 1,
             2: 2,
             3: 3,
             4: 4,
+        },
+    },
+
+    'personal_status_sex': {
+        'delete': True,
+        'replace_with': None,
+        'use_as_is': False,
+        'value_mapping': {
 
         },
     },
-'job': {
+
+    'other_debtors': {
+        'delete': True,
+        'replace_with': 'new_othe_debtors',
+        'use_as_is': False,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 2,
+        },
+    },
+
+    'present_residence': {
+        'delete': True,
+        'replace_with': 'new_present_residence',
+        'use_as_is': False,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 2,
+            4: 2,
+        },
+    },
+
+    'property': {
+        'delete': True,
+        'replace_with': 'new_property',
+        'use_as_is': False,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 2,
+            4: 2,
+        },
+    },
+
+    'age': {
+        'delete': True,
+        'replace_with': None,
+        'use_as_is': False,
+        'value_mapping': {
+
+        },
+    },
+
+    'other_installment_plans': {
+        'delete': False,
+        'replace_with': None,
+        'use_as_is': True,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 3,
+        },
+    },
+
+    'housing': {
+        'delete': True,
+        'replace_with': 'new_housing',
+        'use_as_is': False,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 1,
+        },
+    },
+
+    'number_credit': {
+        'delete': False,
+        'replace_with': None,
+        'use_as_is': True,
+        'value_mapping': {
+            1: 1,
+            2: 2,
+            3: 3,
+            4: 4,
+        },
+    },
+
+    'job': {
         'delete': True,
         'replace_with': 'new_job',
         'use_as_is': False,
         'value_mapping': {
-
             1: 1,
             2: 2,
             3: 3,
             4: 3,
-
         },
     },
-'people_liable': {
+
+    'people_liable': {
         'delete': False,
         'replace_with': None,
         'use_as_is': True,
         'value_mapping': {
-
             1: 1,
             2: 2,
-
         },
     },
-'telephone': {
+
+    'telephone': {
         'delete': True,
         'replace_with': None,
         'use_as_is': False,
         'value_mapping': {
 
-
         },
     },
-'foreign_worker': {
+
+    'foreign_worker': {
         'delete': False,
         'replace_with': None,
         'use_as_is': True,
         'value_mapping': {
-
             1: 1,
             2: 2,
-
         },
     },
-'credit_risk': {
+
+    'credit_risk': {
         'delete': False,
         'replace_with': None,
         'use_as_is': True,
         'value_mapping': {
-
             1: 1,
             2: 2,
-
         },
     },
-
-
-
-
-
-
 }
-
-# EXAMPLE DICTIONARY
-# key - value mapping
-
-# 
-#    'key1': 'value1',
-#    'key2': 'value2',
-#    'key3': {
-#        'key3.key1': 'value3.value1',
-#        'key3.key2': 'value3.value2',
-#    },
-#    'key4': 'value4',
-# }
