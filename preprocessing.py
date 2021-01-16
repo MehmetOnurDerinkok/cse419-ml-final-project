@@ -1,50 +1,72 @@
-""" Preprocessing for raw file  """
+""" Preprocessing functionalities for csv files  """
+from typing import Dict
 
 import pandas as pd
 
-
-CONSECUTIVE_COLUMNS = ('status', 'duration', 'credit_history', 'purpose', 'amount',
-                       'savings', 'employment_duration', 'installment_rate',
-                       'personal_status_sex', 'other_debtors',
-                       'present_residence', 'property',
-                       'age', 'other_installment_plans',
-                       'housing', 'number_credits',
-                       'job', 'people_liable', 'telephone', 'foreign_worker',
-                       'credit_risk')
+from config import NORMALIZATION_MAPPING, ENGLISH_COLUMN_NAMES
 
 
-def parse_csv(file_path: str, delimiter: str = ' ') -> pd.DataFrame:
+def translate_columns_into_english(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Parses csv into a pd.DataFrame
+    replaces original `german` column names with their counterparts based on documentation.
+    Documentation file is ./data/code_table.txt
 
     Args:
-        file_path: str - file path to be parsed
+        dataframe: raw dateframe that their columns will be translated into english
 
     Returns:
         pd.DataFrame
     """
     try:
-        raw_df = pd.read_csv(file_path, delimiter=delimiter)
-        raw_df.columns = CONSECUTIVE_COLUMNS
-        return raw_df
-    except FileNotFoundError:
-        return None
+        dataframe.columns = ENGLISH_COLUMN_NAMES
+        return dataframe
+    except Exception as ex:
+        raise Exception(
+            'Columns could not be translated to english ones. Data is inconsistent.'
+        ) from ex
 
 
-def normalize_df(raw_df: pd.DataFrame) -> pd.DataFrame:
+def drop_column(column_name: str, dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Normalizes df based on given conditions
+    Drops regarding column from dataframe
 
     Args:
-        raw_df: pd.DataFrame - raw dataframe to be normalized
+        column_name: regarding column name to be dropped
+        dataframe: pd.DataFrame - dataframe to be dropped from
 
     Returns:
         pd.DataFrame
     """
-    return raw_df
+    try:
+        dataframe.drop(column_name, axis=1, inplace=True)
+        return dataframe
+    except NameError as ex:
+        raise Exception(
+            f'Column[{column_name}] could not be found. Data is inconsistent.'
+        ) from ex
 
 
-def preprocess_file(file_path: str) -> pd.DataFrame:
+def replace_column_based_on_value_mapping(
+    dataframe: pd.DataFrame, column: str, replace_with: bool, value_mapping: Dict
+) -> pd.DataFrame:
+    """
+    Adds new column based on value_mapping. It basically checks value_mapping to find counterpart
+    of of an original value and put new value under new column
+
+    Args:
+        dataframe: original dataframe
+        column: original column
+        replace_with: new column based on `column` and value_mapping
+        value_mapping: original-new value mapping
+
+    Returns:
+        Updated dataframe.
+    """
+    dataframe[replace_with] = dataframe[column].map(value_mapping)
+    return dataframe
+
+
+def preprocess_train_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     Parses and normalizes csv content at file_path
 
@@ -55,9 +77,43 @@ def preprocess_file(file_path: str) -> pd.DataFrame:
         Parsed and normalized pd.DataFrame
     """
 
-    raw_df = parse_csv(file_path)
-    if raw_df is not None:
-        normalized_df = normalize_df(raw_df)
-        return normalized_df
+    # normally, dataframe columns are in german, we need to translate it into english ones
+    dataframe = translate_columns_into_english(dataframe)
 
-    return raw_df
+    # Scale new attributes and delete redundant columns based on NORMALIZATION_MAPPING
+    for column, config in NORMALIZATION_MAPPING.items():
+        use_as_is = config['use_as_is']
+        if use_as_is:
+            continue
+
+        delete = config['delete']
+        replace_with = config['replace_with']
+
+        value_mapping = config['value_mapping']
+
+        if replace_with:
+            dataframe = replace_column_based_on_value_mapping(
+                dataframe, column, replace_with, value_mapping
+            )
+
+        if delete:
+            dataframe = drop_column(column, dataframe)
+
+    return dataframe
+
+
+def preprocess_query_input_data(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Parses and normalizes csv content at file_path
+
+    Args:
+        file_path: str - file path to be processed
+
+    Returns:
+        Parsed and normalized pd.DataFrame
+    """
+
+    dataframe = translate_columns_into_english(dataframe)
+    dataframe = drop_column('credit_risk', dataframe)
+
+    return dataframe
