@@ -10,6 +10,13 @@ ENGLISH_COLUMN_NAMES = ['status', 'duration', 'credit_history', 'purpose', 'amou
                         'housing', 'number_credits',
                         'job', 'people_liable', 'telephone', 'foreign_worker',
                         'credit_risk']
+ENGLISH_COLUMN_NAMES_USER_INPUTS = ['status', 'duration', 'credit_history', 'purpose', 'amount',
+                                    'savings', 'employment_duration', 'installment_rate',
+                                    'personal_status_sex', 'other_debtors',
+                                    'present_residence', 'property',
+                                    'age', 'other_installment_plans',
+                                    'housing', 'number_credits',
+                                    'job', 'people_liable', 'telephone', 'foreign_worker']
 
 """
 hints for NORMALIZATION_MAPPING:

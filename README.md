@@ -6,8 +6,7 @@ CSE419 Artificial Intelligence and Machine Learning Final Project
     1. code_table.txt: contains english counterpart of german columns, meaning of raw values, also
                         new (scaled/extended) columns based on original ones to reduce complexity.
     2. column_drafts: contains draft workshop regarding which column should be used in what sense.
-    3. query_input: contains 50 sample rows in order to check trained model.
-    4. south_german_credit.asc: contains raw data and this file is being used for traning model.
+    3. south_german_credit.asc: contains raw data and this file is being used for traning model.
 
 
 ## Installation
