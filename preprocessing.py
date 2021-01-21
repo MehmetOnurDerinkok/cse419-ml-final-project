@@ -3,7 +3,7 @@ from typing import Dict
 
 import pandas as pd
 
-from config import NORMALIZATION_MAPPING, ENGLISH_COLUMN_NAMES
+from config import NORMALIZATION_MAPPING, ENGLISH_COLUMN_NAMES, ENGLISH_COLUMN_NAMES_USER_INPUTS
 
 
 def translate_columns_into_english(dataframe: pd.DataFrame) -> pd.DataFrame:
@@ -68,13 +68,13 @@ def replace_column_based_on_value_mapping(
 
 def preprocess_train_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Parses and normalizes csv content at file_path
+    preprocess dataframe for all sort of dataframes related to this project
 
     Args:
-        file_path: str - file path to be processed
+        dataframe: pd.DataFrame
 
     Returns:
-        Parsed and normalized pd.DataFrame
+        preprocessed pd.DataFrame
     """
 
     # normally, dataframe columns are in german, we need to translate it into english ones
@@ -102,18 +102,43 @@ def preprocess_train_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     return dataframe
 
 
-def preprocess_query_input_data(dataframe: pd.DataFrame) -> pd.DataFrame:
+def preprocess_user_input_data(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Parses and normalizes csv content at file_path
+    replaces original `german` column names with their counterparts based on documentation.
+    Documentation file is ./data/code_table.txt
 
     Args:
-        file_path: str - file path to be processed
+        dataframe: raw dateframe that their columns will be translated into english
 
     Returns:
-        Parsed and normalized pd.DataFrame
+        pd.DataFrame
     """
+    try:
+        dataframe.columns = ENGLISH_COLUMN_NAMES_USER_INPUTS
 
-    dataframe = translate_columns_into_english(dataframe)
-    dataframe = drop_column('credit_risk', dataframe)
+        # Scale new attributes and delete redundant columns based on NORMALIZATION_MAPPING
+        for column, config in NORMALIZATION_MAPPING.items():
+            use_as_is = config['use_as_is']
+            if use_as_is:
+                continue
+
+            delete = config['delete']
+            replace_with = config['replace_with']
+
+            value_mapping = config['value_mapping']
+
+            if replace_with:
+                dataframe = replace_column_based_on_value_mapping(
+                    dataframe, column, replace_with, value_mapping
+                )
+
+            if delete:
+                dataframe = drop_column(column, dataframe)
+
+        return dataframe
+    except Exception as ex:
+        raise Exception(
+            'Columns could not be translated to english ones. Data is inconsistent.'
+        ) from ex
 
     return dataframe
