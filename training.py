@@ -10,7 +10,7 @@ from sklearn.svm import LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score, ShuffleSplit
 
-from termcolor import colored
+from utils import colored
 
 
 ALGORITHMS = [

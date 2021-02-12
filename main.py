@@ -6,12 +6,12 @@ from copy import deepcopy
 
 # external 3rd party library
 import pandas as pd
-from termcolor import colored
 
 # project modules
 from preprocessing import preprocess_train_data, preprocess_user_input_data
 from training import train_model
 from prediction import predict_credit_risk_for_query_inputs
+from utils import colored
 
 
 def parse_csv(file_path: str, delimiter: str = ' ') -> pd.DataFrame:
