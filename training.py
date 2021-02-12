@@ -51,8 +51,8 @@ def train_model(dataframe: pd.DataFrame):
     model, accuracy, std_deviation = accuracies_and_deviations[0]
 
     model_colored = colored(Algorithm, 'red')
-    accuracy_colored = colored(round(accuracy, 3), 'red')
-    deviation_colored = colored(round(std_deviation, 3), 'red')
+    accuracy_colored = colored(round(accuracy, 2), 'red')
+    deviation_colored = colored(round(std_deviation, 2), 'red')
 
     print(colored('###################', 'green'))
     print(colored(f'ALGORITHMS are {ALGORITHMS}\n\n', 'blue'))
@@ -85,11 +85,23 @@ def calculate_accuracy_and_deviation_with_kfold(
     """
     Applies k-fold into dataframe and calculates avg accuracy for model
     """
-    # randomly splits data into 10 train and test splits
+    # randomly splits data into 10 chunks
+    # in each chunk, 70% is for training, 30% is for testing purposes
     cross_validation = ShuffleSplit(n_splits=10, test_size=0.3, random_state=0)
+
     accuracies = cross_val_score(model, inputs, outputs, cv=cross_validation)
+
     avg_accuracy = accuracies.mean()
     std_deviation = accuracies.std()
+
+    accuracies_as_list = [round(accuracy, 2) for accuracy in accuracies.tolist()]
+    print('\n')
+    print(colored('###################', 'blue'))
+    print(colored('Cross validation accuracy results for {}:'.format(str(model)), 'green'))
+    print(colored(accuracies_as_list, 'green'))
+    print(colored('Avg Accuracy for {} is {}'.format(str(model), round(avg_accuracy, 2))))
+    print(colored('###################', 'blue'))
+    print('\n')
 
     return avg_accuracy, std_deviation
 
